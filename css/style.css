@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+main {
+    box-shadow:
+            inset 2px 2px 4px 0 rgba(255, 255, 255, 0.10),
+            inset -2px -2px 4px 0 rgba(0, 0, 0, 0.10);
+    transition: 1s;
+}
+
+.bt-primary {
+    background-color: rgb(228, 27, 143);
+}
+
+.bt-primary:hover {
+    color: black;
+    background-color: #EA9467;
+}
+
+a:hover {
+    color: #EA9467;
+}
