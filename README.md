@@ -10,3 +10,4 @@ Le projet dispose d'une dépendance : TailwindCSS
 ### INSTALLATION
 
 1. ```npm install```
+2. ```composer install```
