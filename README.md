@@ -11,3 +11,4 @@ Le projet dispose d'une dépendance : TailwindCSS
 
 1. ```npm install```
 2. ```composer install```
+3. Renommer `.env.example` en `.env` et indiquer vos variables d'environnement.
