@@ -19,6 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isEmailInvalid($email)) {
             $errors["invalidEmail"] = "Invalid e-mail address.";
         }
+        if (isEmailRegistered($pdo, $email)) {
+            $errors["emailUsed"] = "E-mail is already registered.";
+        }
 
         require_once "config_session.inc.php";
         if (!empty($errors)) {
