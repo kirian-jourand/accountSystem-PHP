@@ -16,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isInputEmpty($username, $pwd, $email)) {
             $errors["emptyInput"] = "Fill in all the fields.";
         }
-        
+        if (isEmailInvalid($email)) {
+            $errors["invalidEmail"] = "Invalid e-mail address.";
+        }
 
         require_once "config_session.inc.php";
         if (!empty($errors)) {
