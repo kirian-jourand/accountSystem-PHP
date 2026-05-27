@@ -10,3 +10,6 @@ Le projet dispose d'une dépendance : TailwindCSS
 ### INSTALLATION
 
 1. ```npm install```
+2. ```composer install```
+3. Renommer `.env.example` en `.env` et indiquer vos variables d'environnement.
+4. Exécuter les requettes SQL du fichier `db.sql` pour créer la BDD.
