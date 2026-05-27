@@ -63,7 +63,7 @@
 
     <div class="grid grid-cols-1 gap-6">
         <h3 class=" text-2xl font-bold tracking-wide uppercase text-center">Signup</h3>
-        <form method="POST" action="" class="grid grid-cols-1 gap-6">
+        <form method="POST" action="includes/signup.inc.php" class="grid grid-cols-1 gap-6">
             <label for="username"> <span class="hidden">Username</span>
                 <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
             </label>
