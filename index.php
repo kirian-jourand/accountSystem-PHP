@@ -85,8 +85,8 @@
                 </button>
             </div>
             <div id="signupConfirmPwdInput" class="mb-1 border border-white/25 rounded-2xl pl-4 py-1 placeholder-gray-300 flex items-center justify-center">
-                <label for="confimPwd"> <span class="hidden">Confirm password</span>
-                    <input type="password" name="confimPwd" id="signupConfirmPassword" placeholder="Confirm password" class="placeholder-gray-300 focus:outline-none focus:ring-0">
+                <label for="confirmPwd"> <span class="hidden">Confirm password</span>
+                    <input type="password" name="confirmPwd" id="signupConfirmPassword" placeholder="Confirm password" class="placeholder-gray-300 focus:outline-none focus:ring-0">
                 </label>
                 <button type="button" id="signupConfirmTogglePwd" class="text-gray-300 w-12 flex justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="signupConfirmShowPwdIcon" class="size-6">
