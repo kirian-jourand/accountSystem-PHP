@@ -12,3 +12,22 @@ function isEmailRegistered(object $pdo, string $email): bool {
         return false;
     }
 }
+
+function getEmptyFields(string $username, string $email, string $pwd, string $confimPwd): array {
+    $emptyFields = [];
+
+    if (empty($username)) {
+        $emptyFields[] = "username";
+    }
+    if (empty($email)) {
+        $emptyFields[] = "e-mail";
+    }
+    if (empty($pwd)) {
+        $emptyFields[] = "pwd";
+    }
+    if (empty($confimPwd)) {
+        $emptyFields[] = "confirmPwd";
+    }
+
+    return $emptyFields;
+}

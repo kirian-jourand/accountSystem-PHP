@@ -14,6 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Error handler
         $errors = [];
 
+        $emptyFields = getEmptyFields($username, $email, $pwd, $confirmPwd);
+        if (!empty($emptyFields)) {
+            $errors["emptyFields"] = $emptyFields;
+        }
         if (isEmailInvalid($email)) {
             $errors["invalidEmail"] = "Invalid e-mail address.";
         }
