@@ -13,7 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Error handler
         $errors = [];
 
-        // WIP test à faire
+        if (isInputEmpty($username, $pwd, $email)) {
+            $errors["emptyInput"] = "Fill in all the fields.";
+        }
+        
 
         require_once "config_session.inc.php";
         if (!empty($errors)) {
