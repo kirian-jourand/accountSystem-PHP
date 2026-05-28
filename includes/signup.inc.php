@@ -32,6 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors["emailUsed"] = "E-mail is already registered.";
         }
 
+        $passwordComplexity = isPasswordComplex($pwd);
+        if (in_array(0, $passwordComplexity, false)) {
+            $errors["passwordComplexity"] = $passwordComplexity;
+        }
+
         require_once "config_session.inc.php";
         if (!empty($errors)) {
             $_SESSION["errorsSignup"] = $errors;
