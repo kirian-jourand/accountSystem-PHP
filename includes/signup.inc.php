@@ -38,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors["passwordComplexity"] = $passwordComplexity;
         }
 
+        if(!confirmPasswordTest($pwd, $confirmPwd)) {
+            $errors["isPwdFieldsMatch"] = false;
+        }
+
         require_once "config_session.inc.php";
         if (!empty($errors)) {
             $_SESSION["errorsSignup"] = $errors;
