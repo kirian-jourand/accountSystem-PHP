@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isEmailInvalid($email)) {
-            $errors["invalidEmail"] = "Invalid e-mail address.";
+            $errors["invalidEmail"] = true;
         }
 
         $invalidInputsLength = invalidInputsLength($username, $pwd);
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isEmailRegistered($pdo, $email)) {
-            $errors["emailUsed"] = "E-mail is already registered.";
+            $errors["emailUsed"] = true;
         }
 
         $passwordComplexity = isPasswordComplex($pwd);
