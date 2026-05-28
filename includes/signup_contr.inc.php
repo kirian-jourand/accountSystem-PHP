@@ -47,5 +47,9 @@ function invalidInputsLength(string $username, string $pwd): array {
 }
 
 function isPasswordComplex(string $pwd): array {
-    return ["uppercase letter" => (bool) preg_match('/[A-Z]/', $pwd), "number" => (bool) preg_match('/\d/', $pwd), "special character" => (bool) preg_match('/[!@#$%^&*]/', $pwd)];
+    return [
+        "uppercase letter" => (bool) preg_match('/[A-Z]/', $pwd),
+        "number" => (bool) preg_match('/\d/', $pwd),
+        "special character" => (bool) preg_match('/[!@#$%^&*]/', $pwd)
+    ];
 }
