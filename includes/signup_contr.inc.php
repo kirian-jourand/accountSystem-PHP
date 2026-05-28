@@ -6,11 +6,7 @@ function isEmailInvalid(string $email): bool {
 }
 
 function isEmailRegistered(object $pdo, string $email): bool {
-    if (getEmail($pdo, $email)) {
-        return true;
-    } else {
-        return false;
-    }
+    return (bool) getEmail($pdo, $email);
 }
 
 function getEmptyFields(string $username, string $email, string $pwd, string $confimPwd): array {

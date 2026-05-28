@@ -28,8 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors["invalidInputLength"] = $invalidInputsLength;
         }
 
-        if (isEmailRegistered($pdo, $email)) {
-            $errors["emailUsed"] = true;
+        $isEmailRegistered = isEmailRegistered($pdo, $email);
+        if ($isEmailRegistered) {
+            $errors["isEmailRegistered"] = true;
         }
 
         $passwordComplexity = isPasswordComplex($pwd);
