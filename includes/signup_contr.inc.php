@@ -31,3 +31,17 @@ function getEmptyFields(string $username, string $email, string $pwd, string $co
 
     return $emptyFields;
 }
+
+function invalidInputsLength(string $username, string $pwd): array {
+    $invalidInputsLength = [];
+
+    if (strlen($username) > 30) {
+        $invalidInputsLength[] = "username";
+    }
+
+    if (strlen($pwd) < 8) {
+        $invalidInputsLength[] = "pwd";
+    }
+
+    return $invalidInputsLength;
+}

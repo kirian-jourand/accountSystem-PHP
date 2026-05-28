@@ -18,9 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($emptyFields)) {
             $errors["emptyFields"] = $emptyFields;
         }
+
         if (isEmailInvalid($email)) {
             $errors["invalidEmail"] = "Invalid e-mail address.";
         }
+
+        $invalidInputsLength = invalidInputsLength($username, $pwd);
+        if (!empty($invalidInputsLength)) {
+            $errors["invalidInputLength"] = $invalidInputsLength;
+        }
+
         if (isEmailRegistered($pdo, $email)) {
             $errors["emailUsed"] = "E-mail is already registered.";
         }
