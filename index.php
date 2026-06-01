@@ -69,13 +69,13 @@
                 <label for="username"> <span class="hidden">Username</span>
                     <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">Ce champ doit être rempli</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
             <div class="field-wrapper">
                 <label for="e-mail"> <span class="hidden">E-mail</span>
                     <input type="email" name="e-mail" placeholder="E-mail" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">Ce champ doit être rempli</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
             <div class="field-wrapper">
                 <div id="signupPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
@@ -92,7 +92,7 @@
                         </svg>
                     </button>
                 </div>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">Ce champ doit être rempli</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
             <div class="field-wrapper">
                 <div id="signupConfirmPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
@@ -109,7 +109,7 @@
                         </svg>
                     </button>
                 </div>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">Ce champ doit être rempli</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
             <button type="button" id="signup-submit-btn" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Signup</button>
         </form>
@@ -225,6 +225,8 @@
     });
 
 
+    const errors = <?= json_encode($errors) ?>;
+    console.log(errors);
 
     const signupForm = document.getElementById("signup-form");
     const signupSubmitBtn = document.getElementById("signup-submit-btn");
@@ -235,32 +237,43 @@
         let isValid = true;
 
         fields.forEach(field => {
-            const wrapper  = field.closest('.field-wrapper');
-            const errorMsg = wrapper.querySelector('.error-msg');
-
             if (field.value.trim() === "") {
-                field.classList.add("error-state");
-                // Application de la border rouge différente si c'est un input classique ou un input composé
-                // (ex. input password + bouton pour afficher/cacher)
-                if (field.classList.contains("composed-field")) {
-                    field.closest("div").classList.remove("border-white/25");
-                    field.closest("div").classList.add("border-red-400");
-                } else {
-                    field.classList.remove("border-white/25");
-                    field.classList.add("border-red-400");
-                }
-                errorMsg.classList.remove("hidden");
+                setFieldStateToError(field, "Ce champ doit être rempli");
                 isValid = false;
             } else {
-                field.classList.remove("error-state");
-
-                field.classList.remove("border-red-400");
-                field.classList.add("border-white/25");
-                errorMsg.classList.add("hidden");
+                setFieldStateToDefault(field);
             }
         });
 
         return isValid;
+    }
+
+    function setFieldStateToError(field, errorMessage) {
+        const wrapper  = field.closest('.field-wrapper');
+        const errorMsg = wrapper.querySelector('.error-msg');
+
+        field.classList.add("error-state");
+        // Application de la border rouge différente si c'est un input classique ou un input composé
+        // (ex. input password + bouton pour afficher/cacher)
+        if (field.classList.contains("composed-field")) {
+            field.closest("div").classList.remove("border-white/25");
+            field.closest("div").classList.add("border-red-400");
+        } else {
+            field.classList.remove("border-white/25");
+            field.classList.add("border-red-400");
+        }
+        errorMsg.textContent = errorMessage;
+        errorMsg.classList.remove("hidden");
+    }
+
+    function setFieldStateToDefault(field) {
+        const wrapper  = field.closest('.field-wrapper');
+        const errorMsg = wrapper.querySelector('.error-msg');
+
+        field.classList.remove("error-state");
+        field.classList.remove("border-red-400");
+        field.classList.add("border-white/25");
+        errorMsg.classList.add("hidden");
     }
 
     function validateSignupForm () {
