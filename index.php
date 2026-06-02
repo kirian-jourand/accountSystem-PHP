@@ -301,6 +301,7 @@
             setFieldStateToDefault(field);
         })
 
+        // Test si des champs sont vides
         let emptyFieldsCheck = true;
         let emptyFields = getEmptyFields(signupForm);
         if (emptyFields.length > 0) {
