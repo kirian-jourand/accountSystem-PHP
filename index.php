@@ -276,10 +276,30 @@
         errorMsg.classList.add("hidden");
     }
 
+
+    function getEmptyFields(form) {
+        const fields = form.querySelectorAll('input');
+        let emptyFields = [];
+
+        fields.forEach(field => {
+            if (field.value.trim() === ""){
+                emptyFields.push(field);
+            }
+        });
+
+        return emptyFields;
+    }
+
+
+
+    const signupForm = document.getElementById("signup-form");
+    const signupSubmitBtn = document.getElementById("signup-submit-btn");
     function validateSignupForm () {
-        let isValid = true;
-        isValid = checkEmptyFields(signupForm);
-        return isValid;
+        let emptyFields = getEmptyFields(signupForm);
+        emptyFields.forEach(field => {
+            setFieldStateToError(field, "Ce champ doit être rempli");
+        });
+        return false; //wip
     }
 
     signupSubmitBtn.addEventListener("click", () => {
