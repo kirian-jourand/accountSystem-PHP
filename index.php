@@ -16,7 +16,7 @@
     flex-col
     items-center
     justify-center
-    font-['Montserrat']
+    font-["Montserrat"]
     text-white
 ">
 <main class="
@@ -119,9 +119,9 @@
 </html>
 <script>
     //loading animation
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
         const main = document.getElementsByTagName("main");
-        main[0].classList.remove('opacity-0', 'translate-y-10');
+        main[0].classList.remove("opacity-0", "translate-y-10");
     });
 
     // logic for the login password input
@@ -149,7 +149,7 @@
         loginPwdInput.classList.add("border-white")
     })
 
-    loginPassword.addEventListener('blur', () => {
+    loginPassword.addEventListener("blur", () => {
         loginPwdInput.classList.remove("border-white");
         loginPwdInput.classList.add("border-white/25");
     });
@@ -181,7 +181,7 @@
         signupPwdInput.classList.add("border-white")
     })
 
-    signupPassword.addEventListener('blur', () => {
+    signupPassword.addEventListener("blur", () => {
         signupPwdInput.classList.remove("border-white");
         if (signupPassword.classList.contains("error-state")) {
             signupPwdInput.classList.add("border-red-400");
@@ -215,7 +215,7 @@
         signupConfirmPwdInput.classList.add("border-white");
     })
 
-    signupConfirmPassword.addEventListener('blur', () => {
+    signupConfirmPassword.addEventListener("blur", () => {
         signupConfirmPwdInput.classList.remove("border-white");
         if (signupConfirmPassword.classList.contains("error-state")) {
             signupConfirmPwdInput.classList.add("border-red-400");
@@ -265,10 +265,9 @@
         errorMsg.textContent = errorMessage;
         errorMsg.classList.remove("hidden");
     }
-
     function setFieldStateToDefault(field) {
-        const wrapper  = field.closest('.field-wrapper');
-        const errorMsg = wrapper.querySelector('.error-msg');
+        const wrapper  = field.closest(".field-wrapper");
+        const errorMsg = wrapper.querySelector(".error-msg");
 
         field.classList.remove("error-state");
         field.classList.remove("border-red-400");
@@ -278,7 +277,7 @@
 
 
     function getEmptyFields(form) {
-        const fields = form.querySelectorAll('input');
+        const fields = form.querySelectorAll("input");
         let emptyFields = [];
 
         fields.forEach(field => {
