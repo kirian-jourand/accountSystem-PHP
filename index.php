@@ -276,6 +276,10 @@
         return regex.test(field.value);
     }
 
+    function isUsernameFormatValid(field) {
+        return field.value.length <= 30;
+    }
+
 
     const signupForm = document.getElementById("signup-form");
     const signupFormFields = signupForm.querySelectorAll("input");
@@ -303,7 +307,13 @@
             });
         }
 
-        return emptyFieldsCheck && emailFormatCheck;
+        const usernameField = signupForm.querySelector(("input[name=\"username\"]"));
+        let usernameFormatCheck = isUsernameFormatValid(usernameField);
+        if (!usernameFormatCheck){
+            setFieldStateToError(usernameField, "The username must not exceed 30 characters");
+        }
+
+        return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck;
     }
 
     signupSubmitBtn.addEventListener("click", () => {
