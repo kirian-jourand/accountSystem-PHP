@@ -224,31 +224,38 @@
         }
     });
 
-
-    const errors = <?= json_encode($errors) ?>;
-    console.log(errors);
-
-
-    function setFieldStateToError(field, errorMessage) {
+    /**
+     * Change field state
+     * @param {HTMLElement} field
+     * @param {"error" | "default"} state
+     * @param {string} [errorMessage]
+     */
+    function changeFieldState(field, state, errorMessage) {
         const wrapper  = field.closest(".field-wrapper");
         const errorMsg = wrapper.querySelector(".error-msg");
 
-        field.classList.add("error-state");
-        // Application de la border rouge différente si c'est un input classique ou un input composé
-        // (ex. input password + bouton pour afficher/cacher)
-        if (field.classList.contains("composed-field")) {
-            field.closest("div").classList.remove("border-white/25");
-            field.closest("div").classList.add("border-red-400");
-        } else {
-            field.classList.remove("border-white/25");
-            field.classList.add("border-red-400");
+        if (state === "error") {
+            field.classList.add("error-state");
+            // Application de la border rouge différente si c'est un input classique ou un input composé
+            // (ex. input password + bouton pour afficher/cacher)
+            if (field.classList.contains("composed-field")) {
+                field.closest("div").classList.remove("border-white/25");
+                field.closest("div").classList.add("border-red-400");
+            } else {
+                field.classList.remove("border-white/25");
+                field.classList.add("border-red-400");
+            }
+            errorMsg.textContent = errorMessage;
+            errorMsg.classList.remove("hidden");
         }
-        errorMsg.textContent = errorMessage;
-        errorMsg.classList.remove("hidden");
+
+        if (state === "default") {
+            field.classList.remove("error-state");
+            field.classList.remove("border-red-400");
+            field.classList.add("border-white/25");
+            errorMsg.classList.add("hidden");
+        }
     }
-    function setFieldStateToDefault(field) {
-        const wrapper  = field.closest(".field-wrapper");
-        const errorMsg = wrapper.querySelector(".error-msg");
 
         field.classList.remove("error-state");
         field.classList.remove("border-red-400");
