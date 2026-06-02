@@ -251,6 +251,8 @@
     function setFieldStateToError(field, errorMessage) {
         const wrapper  = field.closest('.field-wrapper');
         const errorMsg = wrapper.querySelector('.error-msg');
+        const wrapper  = field.closest(".field-wrapper");
+        const errorMsg = wrapper.querySelector(".error-msg");
 
         field.classList.add("error-state");
         // Application de la border rouge différente si c'est un input classique ou un input composé
