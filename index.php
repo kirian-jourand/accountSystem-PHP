@@ -228,25 +228,6 @@
     const errors = <?= json_encode($errors) ?>;
     console.log(errors);
 
-    const signupForm = document.getElementById("signup-form");
-    const signupSubmitBtn = document.getElementById("signup-submit-btn");
-
-    function checkEmptyFields(form) {
-        const fields = form.querySelectorAll('input');
-        console.log(fields);
-        let isValid = true;
-
-        fields.forEach(field => {
-            if (field.value.trim() === "") {
-                setFieldStateToError(field, "Ce champ doit être rempli");
-                isValid = false;
-            } else {
-                setFieldStateToDefault(field);
-            }
-        });
-
-        return isValid;
-    }
 
     function setFieldStateToError(field, errorMessage) {
         console.log(field);
