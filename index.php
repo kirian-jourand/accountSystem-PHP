@@ -325,6 +325,7 @@
     const signupFormFields = signupForm.querySelectorAll("input");
     const signupSubmitBtn = document.getElementById("signup-submit-btn");
 
+    // Test en temps réel si le password est complex
     const passwordField = signupForm.querySelector("input[name=\"pwd\"]");
     const passwordLengthCheck = signupForm.querySelector(".lengthCheck");
     const passwordUppercaseCheck = signupForm.querySelector(".uppercaseCheck");
