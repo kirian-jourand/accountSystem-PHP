@@ -280,6 +280,10 @@
         return field.value.length <= 30;
     }
 
+    function isConfirmPasswordValid(passwordField, confirmPasswordField) {
+        return passwordField.value === confirmPasswordField.value;
+    }
+
 
     const signupForm = document.getElementById("signup-form");
     const signupFormFields = signupForm.querySelectorAll("input");
@@ -295,6 +299,13 @@
         let emailFormatCheck = isEmailFormatValid(emailField);
         if (!emailFormatCheck) {
             setFieldStateToError(emailField, "Le format de l'email est invalide");
+        }
+
+        const passwordField = signupForm.querySelector("input[name=\"pwd\"]");
+        const confirmPasswordField = signupForm.querySelector("input[name=\"confirmPwd\"]");
+        let confirmPasswordCheck = isConfirmPasswordValid(passwordField, confirmPasswordField);
+        if(!confirmPasswordCheck) {
+            setFieldStateToError(confirmPasswordField, "This is different from the password field");
         }
 
         // Test si des champs sont vides
@@ -313,7 +324,7 @@
             setFieldStateToError(usernameField, "The username must not exceed 30 characters");
         }
 
-        return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck;
+        return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck && confirmPasswordCheck;
     }
 
     signupSubmitBtn.addEventListener("click", () => {
