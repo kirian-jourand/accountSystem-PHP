@@ -298,21 +298,21 @@
     function validateSignupForm () {
         // Remise à 0 des fields
         signupFormFields.forEach(field => {
-            setFieldStateToDefault(field);
+            changeFieldState(field, "default");
         })
 
         // Test si le format de l'email est valide
         const emailField = signupForm.querySelector("input[type=\"email\"]");
         let emailFormatCheck = isEmailFormatValid(emailField);
         if (!emailFormatCheck) {
-            setFieldStateToError(emailField, "Le format de l'email est invalide");
+            changeFieldState(emailField, "error", "The email format is invalid (Ex. example@mail.com)");
         }
 
         const passwordField = signupForm.querySelector("input[name=\"pwd\"]");
         const confirmPasswordField = signupForm.querySelector("input[name=\"confirmPwd\"]");
         let confirmPasswordCheck = isConfirmPasswordValid(passwordField, confirmPasswordField);
         if(!confirmPasswordCheck) {
-            setFieldStateToError(confirmPasswordField, "This is different from the password field");
+            changeFieldState(confirmPasswordField, "error", "This is different from the password field");
         }
 
         // Test si des champs sont vides
@@ -321,14 +321,14 @@
         if (emptyFields.length > 0) {
             emptyFieldsCheck = false;
             emptyFields.forEach(field => {
-                setFieldStateToError(field, "Ce champ doit être rempli");
+                changeFieldState(field, "error", "This field is required");
             });
         }
 
         const usernameField = signupForm.querySelector(("input[name=\"username\"]"));
         let usernameFormatCheck = isUsernameFormatValid(usernameField);
         if (!usernameFormatCheck){
-            setFieldStateToError(usernameField, "The username must not exceed 30 characters");
+            changeFieldState(usernameField, "error", "The username must not exceed 30 characters");
         }
 
         return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck && confirmPasswordCheck;
@@ -343,7 +343,7 @@
     // Retire l'erreur en temps réel quand l'utilisateur commence à taper
     signupForm.querySelectorAll("input").forEach(field => {
         field.addEventListener("input", () => {
-            setFieldStateToDefault(field);
+            changeFieldState(field, "default");
         });
     })
 
