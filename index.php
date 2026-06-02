@@ -93,6 +93,12 @@
                     </button>
                 </div>
                 <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+                <ul id="signupPwdComplexRule" class="hidden">
+                    <li class="lengthCheck text-red-400 text-sm"><span class="emojiValid">❌</span> is more than 8 characters long</li>
+                    <li class="uppercaseCheck text-red-400 text-sm"><span class="emojiValid">❌</span> Contains an uppercase letter (A,B,C,...)</li>
+                    <li class="numberCheck text-red-400 text-sm"><span class="emojiValid">❌</span> Contains a number (1,2,3,...)</li>
+                    <li class="specialCharCheck text-red-400 text-sm"><span class="emojiValid">❌</span> Contains a special character (!@#$%^&*)</li>
+                </ul>
             </div>
             <div class="field-wrapper">
                 <div id="signupConfirmPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
@@ -162,6 +168,7 @@
     const signupTogglePwd = document.getElementById("signupTogglePwd");
     const signupShowPwdIcon = document.getElementById("signupShowPwdIcon");
     const signupHidePwdIcon = document.getElementById("signupHidePwdIcon");
+    const signupPwdComplexRule = document.getElementById("signupPwdComplexRule");
 
     signupTogglePwd.onclick = function () {
         if(signupPassword.type === "password"){
@@ -177,8 +184,9 @@
     }
 
     signupPassword.addEventListener("focus", () => {
-        signupPwdInput.classList.remove("border-white/25")
-        signupPwdInput.classList.add("border-white")
+        signupPwdInput.classList.remove("border-white/25");
+        signupPwdInput.classList.add("border-white");
+        signupPwdComplexRule.classList.remove("hidden");
     })
 
     signupPassword.addEventListener("blur", () => {
@@ -257,10 +265,22 @@
         }
     }
 
-        field.classList.remove("error-state");
-        field.classList.remove("border-red-400");
-        field.classList.add("border-white/25");
-        errorMsg.classList.add("hidden");
+    /**
+     * @param {HTMLElement} li
+     * @param {"error" | "default"} state
+     */
+    function changePasswordComplexityRuleState(li, state) {
+        const emojiValid = li.querySelector('span.emojiValid');
+        if (state === "error") {
+            li.classList.remove("text-gray-300");
+            li.classList.add("text-red-400");
+            emojiValid.textContent  = "❌";
+        }
+        else if (state === "default") {
+            li.classList.remove("text-red-400");
+            li.classList.add("text-gray-300");
+            emojiValid.textContent  = "✅";
+        }
     }
 
 
@@ -291,10 +311,59 @@
         return passwordField.value === confirmPasswordField.value;
     }
 
+    function isPasswordComplex(field) {
+        return {
+            "length":               field.value.length >= 8,
+            "uppercase letter":    /[A-Z]/.test(field.value),
+            "number":              /\d/.test(field.value),
+            "special character":   /[!@#$%^&*]/.test(field.value)
+        };
+    }
+
 
     const signupForm = document.getElementById("signup-form");
     const signupFormFields = signupForm.querySelectorAll("input");
     const signupSubmitBtn = document.getElementById("signup-submit-btn");
+
+    const passwordField = signupForm.querySelector("input[name=\"pwd\"]");
+    const passwordLengthCheck = signupForm.querySelector(".lengthCheck");
+    const passwordUppercaseCheck = signupForm.querySelector(".uppercaseCheck");
+    const passwordNumberCheck = signupForm.querySelector(".numberCheck");
+    const passwordSpecialCharCheck = signupForm.querySelector(".specialCharCheck");
+    let passwordComplexityCheck = false;
+    passwordField.addEventListener("input", () => {
+        let passwordComplexity = isPasswordComplex(passwordField);
+        if (passwordComplexity["length"]) {
+            changePasswordComplexityRuleState(passwordLengthCheck, "default");
+        }
+        else {
+            changePasswordComplexityRuleState(passwordLengthCheck, "error");
+        }
+
+        if (passwordComplexity["uppercase letter"]) {
+            changePasswordComplexityRuleState(passwordUppercaseCheck, "default");
+        }
+        else {
+            changePasswordComplexityRuleState(passwordUppercaseCheck, "error");
+        }
+
+        if (passwordComplexity["number"]) {
+            changePasswordComplexityRuleState(passwordNumberCheck, "default");
+        }
+        else {
+            changePasswordComplexityRuleState(passwordNumberCheck, "error");
+        }
+
+        if (passwordComplexity["special character"]) {
+            changePasswordComplexityRuleState(passwordSpecialCharCheck, "default");
+        }
+        else {
+            changePasswordComplexityRuleState(passwordSpecialCharCheck, "error");
+        }
+
+        passwordComplexityCheck = passwordComplexity["length"] && passwordComplexity["uppercase letter"] && passwordComplexity["number"] && passwordComplexity["special character"];
+    });
+
     function validateSignupForm () {
         // Remise à 0 des fields
         signupFormFields.forEach(field => {
@@ -331,7 +400,7 @@
             changeFieldState(usernameField, "error", "The username must not exceed 30 characters");
         }
 
-        return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck && confirmPasswordCheck;
+        return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck && confirmPasswordCheck && passwordComplexityCheck;
     }
 
     signupSubmitBtn.addEventListener("click", () => {
