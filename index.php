@@ -16,7 +16,7 @@
     flex-col
     items-center
     justify-center
-    font-["Montserrat"]
+    font-['Montserrat']
     text-white
 ">
 <main class="
@@ -300,6 +300,13 @@
         signupFormFields.forEach(field => {
             setFieldStateToDefault(field);
         })
+
+        // Test si le format de l'email est valide
+        const emailField = signupForm.querySelector("input[type=\"email\"]");
+        let emailFormatCheck = isEmailFormatValid(emailField);
+        if (!emailFormatCheck) {
+            setFieldStateToError(emailField, "Le format de l'email est invalide");
+        }
 
         // Test si des champs sont vides
         let emptyFieldsCheck = true;
