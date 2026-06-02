@@ -311,17 +311,8 @@
     // Retire l'erreur en temps réel quand l'utilisateur commence à taper
     signupForm.querySelectorAll("input").forEach(field => {
         field.addEventListener("input", () => {
-            const wrapper  = field.closest('.field-wrapper');
-            const errorMsg = wrapper.querySelector('.error-msg');
-
-            if (field.value.trim() !== '') {
-                field.classList.remove("error-state");
-                field.classList.remove("border-red-500");
-                field.classList.add("border-white/25")
-                errorMsg.classList.add('hidden');
-            }
+            setFieldStateToDefault(field);
         });
-        signupConfirmPwdInput.classList.add("border-white/25");
-    });
+    })
 
 </script>
