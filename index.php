@@ -230,7 +230,6 @@
 
 
     function setFieldStateToError(field, errorMessage) {
-        console.log(field);
         const wrapper  = field.closest(".field-wrapper");
         const errorMsg = wrapper.querySelector(".error-msg");
 
