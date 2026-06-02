@@ -13,3 +13,8 @@ Le projet dispose d'une dépendance : TailwindCSS
 2. ```composer install```
 3. Renommer `.env.example` en `.env` et indiquer vos variables d'environnement.
 4. Exécuter les requettes SQL du fichier `db.sql` pour créer la BDD.
+
+
+### DÉVELOPPEMENT
+Commande pour générer le css en continu :
+```npx @tailwindcss/cli -i ./css/style.css -o ./css/output.css --watch```
