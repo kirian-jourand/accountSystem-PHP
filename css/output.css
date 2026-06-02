@@ -8,7 +8,6 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-400: oklch(70.4% 0.191 22.216);
-    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-orange-300: oklch(83.7% 0.128 66.29);
     --color-pink-600: oklch(59.2% 0.249 0.584);
     --color-gray-300: oklch(87.2% 0.01 258.338);
@@ -290,9 +289,6 @@
   }
   .text-center {
     text-align: center;
-  }
-  .font-\[\"Montserrat\"\] {
-    font-family: "Montserrat";
   }
   .font-\[\'Montserrat\'\] {
     font-family: 'Montserrat';
