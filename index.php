@@ -293,8 +293,15 @@
 
 
     const signupForm = document.getElementById("signup-form");
+    const signupFormFields = signupForm.querySelectorAll("input");
     const signupSubmitBtn = document.getElementById("signup-submit-btn");
     function validateSignupForm () {
+        // Remise à 0 des fields
+        signupFormFields.forEach(field => {
+            setFieldStateToDefault(field);
+        })
+
+        let emptyFieldsCheck = true;
         let emptyFields = getEmptyFields(signupForm);
         if (emptyFields.length > 0) {
             emptyFieldsCheck = false;
