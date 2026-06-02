@@ -271,6 +271,11 @@
         return emptyFields;
     }
 
+    function isEmailFormatValid(field) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return regex.test(field.value);
+    }
 
 
     const signupForm = document.getElementById("signup-form");
@@ -299,8 +304,7 @@
             });
         }
 
-
-        return emptyFieldsCheck;
+        return emptyFieldsCheck && emailFormatCheck;
     }
 
     signupSubmitBtn.addEventListener("click", () => {
