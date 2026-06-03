@@ -56,7 +56,7 @@ function isPasswordComplex(string $pwd): array {
  * @param string $pwd           Mot de passe
  * @param string $confirmPwd    Confirmation du mot de passe
  *
- * @return bool true: les deux paramètres sont égaux, false: le deux paramètres ne sont pas égaux
+ * @return bool true: les deux paramètres sont égaux, false : le deux paramètres ne sont pas égaux
  */
 function confirmPasswordTest(string $pwd, string $confirmPwd): bool {
     return $pwd === $confirmPwd;

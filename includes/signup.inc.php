@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $passwordComplexity = isPasswordComplex($pwd);
-        if (in_array(0, $passwordComplexity, false)) {
+        if (in_array(0, $passwordComplexity)) {
             $errors["passwordComplexity"] = $passwordComplexity;
         }
 

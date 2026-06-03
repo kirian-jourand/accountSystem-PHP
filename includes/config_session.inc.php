@@ -2,11 +2,13 @@
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 
+$isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+
 session_set_cookie_params([
     'lifetime' => 1800, // 30 minutes
     'domain' => 'localhost',
     'path' => '/',
-    'secure' => true,
+    'secure' => $isSecure,
     'httponly' => true,
 ]);
 session_start();
