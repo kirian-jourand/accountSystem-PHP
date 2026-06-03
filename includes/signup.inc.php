@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once "config_session.inc.php";
         if (!empty($errors)) {
             $_SESSION["errorsSignup"] = $errors;
+            $_SESSION["submitData"] = ["username" => $username, "e-mail" => $email];
             header("location: ../index.php");
         }
 

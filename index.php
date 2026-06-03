@@ -1,5 +1,8 @@
 <?php
 require_once "includes/config_session.inc.php";
+require_once "includes/signup_view.inc.php";
+
+$submitFeedback = getSignupSubmitFeedback();
 ?>
 
 <!doctype html>
@@ -71,13 +74,23 @@ require_once "includes/config_session.inc.php";
         <form method="POST" action="includes/signup.inc.php" id="signup-form" class="grid grid-cols-1 gap-6">
             <div class="field-wrapper">
                 <label for="username"> <span class="hidden">Username</span>
-                    <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
+                    <input
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value="<?= htmlspecialchars($submitFeedback['submitData']['username'] ?? '') ?>"
+                            class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
                 <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
             <div class="field-wrapper">
                 <label for="e-mail"> <span class="hidden">E-mail</span>
-                    <input type="email" name="e-mail" placeholder="E-mail" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
+                    <input
+                            type="email"
+                            name="e-mail"
+                            placeholder="E-mail"
+                            value="<?= htmlspecialchars($submitFeedback['submitData']['e-mail'] ?? '') ?>"
+                            class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
                 <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
             </div>
