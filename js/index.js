@@ -207,6 +207,7 @@ const passwordLengthCheck = signupForm.querySelector(".lengthCheck");
 const passwordUppercaseCheck = signupForm.querySelector(".uppercaseCheck");
 const passwordNumberCheck = signupForm.querySelector(".numberCheck");
 const passwordSpecialCharCheck = signupForm.querySelector(".specialCharCheck");
+const emailField = signupForm.querySelector("input[type=\"email\"]");
 let passwordComplexityCheck = false;
 passwordField.addEventListener("input", () => {
     var _a;
@@ -230,7 +231,6 @@ function validateSignupForm() {
         changeFieldState(field, "default");
     });
     // Check if the email format is valid
-    const emailField = signupForm.querySelector("input[type=\"email\"]");
     let emailFormatCheck = isEmailFormatValid(emailField);
     if (!emailFormatCheck) {
         changeFieldState(emailField, "error", "The email format is invalid (Ex. example@mail.com)");
@@ -259,11 +259,9 @@ function validateSignupForm() {
     return emptyFieldsCheck && emailFormatCheck && usernameFormatCheck && confirmPasswordCheck && passwordComplexityCheck;
 }
 signupSubmitBtn.addEventListener("click", () => {
-    console.log("c'est partie");
     if (validateSignupForm()) {
-        // signupForm.submit();
+        signupForm.submit();
     }
-    signupForm.submit();
 });
 // Resets the field to its default state when the user modifies it
 signupForm.querySelectorAll("input").forEach(field => {
@@ -271,3 +269,11 @@ signupForm.querySelectorAll("input").forEach(field => {
         changeFieldState(field, "default");
     });
 });
+const submitData = document.getElementById("submit-data");
+const submitErrors = JSON.parse(submitData.dataset.errors);
+if (!Array.isArray(submitErrors)) {
+    validateSignupForm();
+    if (submitErrors["isEmailRegistered"]) {
+        changeFieldState(emailField, "error", "This email address is already associated with an account");
+    }
+}

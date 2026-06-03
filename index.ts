@@ -239,6 +239,7 @@ const passwordLengthCheck = signupForm.querySelector(".lengthCheck") as HTMLElem
 const passwordUppercaseCheck = signupForm.querySelector(".uppercaseCheck") as HTMLElement;
 const passwordNumberCheck = signupForm.querySelector(".numberCheck") as HTMLElement;
 const passwordSpecialCharCheck = signupForm.querySelector(".specialCharCheck") as HTMLElement;
+const emailField = signupForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
 let passwordComplexityCheck = false;
 passwordField.addEventListener("input", () => {
     const passwordComplexity = isPasswordComplex(passwordField);
@@ -265,7 +266,6 @@ function validateSignupForm () {
     })
 
     // Check if the email format is valid
-    const emailField = signupForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
     let emailFormatCheck = isEmailFormatValid(emailField);
     if (!emailFormatCheck) {
         changeFieldState(emailField, "error", "The email format is invalid (Ex. example@mail.com)");
@@ -309,4 +309,13 @@ signupForm.querySelectorAll("input").forEach(field => {
     field.addEventListener("input", () => {
         changeFieldState(field, "default");
     });
-})
+});
+
+const submitData = document.getElementById("submit-data") as HTMLElement;
+const submitErrors: Array<any> = JSON.parse(<string>submitData.dataset.errors);
+if (!Array.isArray(submitErrors)) {
+    validateSignupForm();
+    if(submitErrors["isEmailRegistered"]) {
+        changeFieldState(emailField, "error", "This email address is already associated with an account");
+    }
+}

@@ -139,5 +139,6 @@ $submitFeedback = getSignupSubmitFeedback();
     </div>
 </main>
 </body>
+<div id="submit-data" data-errors="<?= htmlspecialchars(json_encode($submitFeedback ? $submitFeedback['errors'] : [])) ?>"></div>
 </html>
 <script src="./js/index.js"></script>
