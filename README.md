@@ -6,8 +6,6 @@ tuto suivie : https://youtu.be/Ojk70Ag8Ofs?si=pGWRmAV59L3C64Z4
 
 <img src="/img/screenshot.png" height="500" alt="screenshot du projet">
 
-Le projet dispose d'une dépendance : TailwindCSS
-
 ### INSTALLATION
 
 1. ```npm install```
