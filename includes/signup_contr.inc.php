@@ -28,22 +28,13 @@ function getEmptyFields(string $username, string $email, string $pwd, string $co
     return $emptyFields;
 }
 
-function invalidInputsLength(string $username, string $pwd): array {
-    $invalidInputsLength = [];
-
-    if (strlen($username) > 30) {
-        $invalidInputsLength[] = "username";
-    }
-
-    if (strlen($pwd) < 8) {
-        $invalidInputsLength[] = "pwd";
-    }
-
-    return $invalidInputsLength;
+function isUsernameLengthInvalid(string $username): bool {
+    return strlen($username) > 30;
 }
 
 function isPasswordComplex(string $pwd): array {
     return [
+        "length" => (bool) strlen($pwd) >= 8,
         "uppercase letter" => (bool) preg_match('/[A-Z]/', $pwd),
         "number" => (bool) preg_match('/\d/', $pwd),
         "special character" => (bool) preg_match('/[!@#$%^&*]/', $pwd)

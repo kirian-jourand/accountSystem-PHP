@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors["invalidEmail"] = true;
         }
 
-        $invalidInputsLength = invalidInputsLength($username, $pwd);
-        if (!empty($invalidInputsLength)) {
-            $errors["invalidInputLength"] = $invalidInputsLength;
+        $isUsernameLengthInvalid = isUsernameLengthInvalid($username);
+        if ($isUsernameLengthInvalid) {
+            $errors["usernameLengthInvalid"] = $isUsernameLengthInvalid;
         }
 
         $isEmailRegistered = isEmailRegistered($pdo, $email);
