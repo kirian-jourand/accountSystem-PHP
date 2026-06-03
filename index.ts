@@ -6,6 +6,8 @@ window.addEventListener("load", () => {
     }
 });
 
+
+
 // logic for the login password input
 const loginPwdInput = document.getElementById("loginPwdInput") as HTMLDivElement;
 const loginPassword = document.getElementById("loginPassword") as HTMLInputElement;
@@ -74,6 +76,8 @@ signupPassword.addEventListener("blur", () => {
     }
 });
 
+
+
 // logic for the signup  confirm password input
 const signupConfirmPwdInput = document.getElementById("signupConfirmPwdInput") as HTMLDivElement;
 const signupConfirmPassword = document.getElementById("signupConfirmPassword") as HTMLInputElement;
@@ -107,6 +111,8 @@ signupConfirmPassword.addEventListener("blur", () => {
         signupConfirmPwdInput.classList.add("border-white/25");
     }
 });
+
+
 
 /**
  * Change field state
@@ -142,6 +148,7 @@ function changeFieldState(field: HTMLInputElement, state: "error" | "default", e
 }
 
 /**
+ * Change password complexity rule state
  * @param {HTMLElement} li
  * @param {"error" | "default"} state
  */
@@ -160,6 +167,10 @@ function changePasswordComplexityRuleState(li: HTMLElement, state: "error" | "de
 }
 
 
+/**
+ * Return the empty fields of a form
+ * @param {HTMLFormElement} form
+ */
 function getEmptyFields(form: HTMLFormElement): HTMLInputElement[] {
     const fields = form.querySelectorAll("input");
     let emptyFields: HTMLInputElement[] = [];
@@ -173,20 +184,41 @@ function getEmptyFields(form: HTMLFormElement): HTMLInputElement[] {
     return emptyFields;
 }
 
+/**
+ * Returns a boolean if the given field matches the email format
+ * @param {HTMLInputElement} field
+ */
 function isEmailFormatValid(field: HTMLInputElement): boolean {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     return regex.test(field.value);
 }
 
+/**
+ * Return a boolean if the given field don't exceed 30 characters
+ * @param {HTMLInputElement} field
+ */
 function isUsernameFormatValid(field: HTMLInputElement): boolean {
     return field.value.length <= 30;
 }
 
+/**
+ * Return a boolean if passwordField is equal to confirmPasswordField
+ * @param {HTMLInputElement} passwordField
+ * @param {HTMLInputElement} confirmPasswordField
+ */
 function isConfirmPasswordValid(passwordField: HTMLInputElement, confirmPasswordField: HTMLInputElement): boolean {
     return passwordField.value === confirmPasswordField.value;
 }
 
+/**
+ * Returns an associative array with the complexity rule as the key and a boolean value indicating whether the rule is satisfied<br>
+ * - **length** : Is the password more than 8 characters long<br>
+ * - **uppercase letter** : is the password contain an uppercase letter<br>
+ * - **number** : is the password contain a number<br>
+ * - **special character** : is the password contain a special character (!@#$%^&*)
+ * @param {HTMLInputElement} field
+ */
 function isPasswordComplex(field: HTMLInputElement): Record<string, boolean> {
     return {
         "length":               field.value.length >= 8,
@@ -223,26 +255,30 @@ passwordField.addEventListener("input", () => {
         passwordComplexity["special character"]) ?? false;
 });
 
+/**
+ * Checks whether the signup form is valid and submits it if it is. It also updates the field statuses.
+ */
 function validateSignupForm () {
     // Remise à 0 des fields
     signupFormFields.forEach(field => {
         changeFieldState(field, "default");
     })
 
-    // Test si le format de l'email est valide
+    // Check if the email format is valid
     const emailField = signupForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
     let emailFormatCheck = isEmailFormatValid(emailField);
     if (!emailFormatCheck) {
         changeFieldState(emailField, "error", "The email format is invalid (Ex. example@mail.com)");
     }
 
+    // Check if passwordField equals confirmPasswordField
     const confirmPasswordField = signupForm.querySelector("input[name=\"confirmPwd\"]") as HTMLInputElement;
     let confirmPasswordCheck = isConfirmPasswordValid(passwordField, confirmPasswordField);
     if(!confirmPasswordCheck) {
         changeFieldState(confirmPasswordField, "error", "This is different from the password field");
     }
 
-    // Test si des champs sont vides
+    // Check if fields are empty
     let emptyFieldsCheck = true;
     let emptyFields = getEmptyFields(signupForm);
     if (emptyFields.length > 0) {
@@ -252,6 +288,7 @@ function validateSignupForm () {
         });
     }
 
+    // Check if the username don't exceed 30 characters
     const usernameField = signupForm.querySelector<HTMLInputElement>("input[name=\"username\"]") as HTMLInputElement;
     const usernameFormatCheck = isUsernameFormatValid(usernameField);
     if (!usernameFormatCheck) {
@@ -267,7 +304,7 @@ signupSubmitBtn.addEventListener("click", () => {
     }
 });
 
-// Retire l'erreur en temps réel quand l'utilisateur commence à taper
+// Resets the field to its default state when the user modifies it
 signupForm.querySelectorAll("input").forEach(field => {
     field.addEventListener("input", () => {
         changeFieldState(field, "default");
