@@ -95,3 +95,7 @@ function isPasswordComplex(string $pwd): array {
 function confirmPasswordTest(string $pwd, string $confirmPwd): bool {
     return $pwd === $confirmPwd;
 }
+
+function createUser(object $pdo, string $username, string $email, string $pwd): void {
+    createUser($pdo, $username, $email, $pwd);
+}
