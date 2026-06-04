@@ -46,15 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($errors)) {
             createUser($pdo, $username, $email, $pwd);
             header("location: ../index.php?signup=success");
-            $pdo = null;
-            $stmt=null;
-            die();
         }
         else {
             $_SESSION["errorsSignup"] = $errors;
             $_SESSION["submitData"] = ["username" => $username, "e-mail" => $email];
             header("location: ../index.php");
         }
+        $pdo = null;
+        $stmt=null;
+        die();
 
     } catch (PDOException $e) {
         die("Query failed: " . $e->getMessage());
