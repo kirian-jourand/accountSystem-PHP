@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 //loading animation
 window.addEventListener("load", () => {
     const main = document.getElementsByTagName("main");
@@ -269,11 +270,49 @@ signupForm.querySelectorAll("input").forEach(field => {
         changeFieldState(field, "default");
     });
 });
+const DURATION = 6000; // 6 secondes
+let rafId;
+let startTime;
+const snackbar = document.getElementById('snackbar');
+const bar = document.getElementById('progress-bar');
+function showSnackbar() {
+    snackbar.classList.remove("opacity-0", "translate-y-10");
+    snackbar.style.display = 'flex';
+    bar.style.transform = 'scaleX(1)';
+    startTime = performance.now();
+    function animate(now) {
+        const progress = Math.min((now - startTime) / DURATION, 1);
+        bar.style.transform = `scaleX(${1 - progress})`;
+        if (progress < 1) {
+            rafId = requestAnimationFrame(animate);
+        }
+        else {
+            snackbar.classList.add("opacity-0", "translate-y-10");
+            setTimeout(() => {
+                snackbar.style.display = 'none';
+            }, 1000);
+        }
+    }
+    rafId = requestAnimationFrame(animate);
+}
+(_a = document.getElementById('snackbar-close')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+    cancelAnimationFrame(rafId);
+    snackbar.classList.add("opacity-0", "translate-y-10");
+    setTimeout(() => {
+        snackbar.style.display = 'none';
+    }, 1000);
+});
 const submitData = document.getElementById("submit-data");
-const submitErrors = JSON.parse(submitData.dataset.errors);
-if (!Array.isArray(submitErrors)) {
-    validateSignupForm();
-    if (submitErrors["isEmailRegistered"]) {
-        changeFieldState(emailField, "error", "This email address is already associated with an account");
+const submitFeedback = JSON.parse(submitData.dataset.feedback);
+console.log(submitFeedback);
+if (!Array.isArray(submitFeedback)) {
+    if ("errors" in submitFeedback) {
+        validateSignupForm();
+        if (submitFeedback["errors"]["isEmailRegistered"]) {
+            changeFieldState(emailField, "error", "This email address is already associated with an account");
+        }
+    }
+    else if ("signup" in submitFeedback && submitFeedback["signup"] === "success") {
+        showSnackbar();
     }
 }

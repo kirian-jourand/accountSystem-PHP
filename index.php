@@ -138,7 +138,24 @@ $submitFeedback = getSignupSubmitFeedback();
         </form>
     </div>
 </main>
+<div class="snackbar bg-black/50 opacity-0 translate-y-10" id="snackbar">
+    <div class="snackbar-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-[rgb(234,148,103)]">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+    </div>
+    <div class="snackbar-text">
+        <p class="snackbar-title">Account created successfully</p>
+        <p class="snackbar-sub">Welcome! You can now log in.</p>
+    </div>
+    <button id="snackbar-close">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+    </button>
+    <div class="progress-bar" id="progress-bar"></div>
+</div>
 </body>
-<div id="submit-data" data-errors="<?= htmlspecialchars(json_encode($submitFeedback ? $submitFeedback['errors'] : [])) ?>"></div>
+<div id="submit-data" data-feedback="<?= htmlspecialchars(json_encode($submitFeedback)) ?>"></div>
 </html>
 <script src="./js/index.js"></script>

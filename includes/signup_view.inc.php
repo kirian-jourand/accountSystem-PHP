@@ -8,7 +8,10 @@ function getSignupSubmitFeedback(): array {
         $submitData = $_SESSION["submitData"];
         unset($_SESSION["submitData"]);
         return ["errors" => $errors, "submitData" => $submitData];
-    } else {
+    } elseif (isset($_GET["signup"]) && $_GET["signup"] === "success") {
+        return ["signup" => "success"];
+    }
+    else {
         return [];
     }
 }

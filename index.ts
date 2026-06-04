@@ -311,11 +311,54 @@ signupForm.querySelectorAll("input").forEach(field => {
     });
 });
 
+
+const DURATION = 6000; // 6 secondes
+let rafId: number;
+let startTime: number;
+const snackbar = document.getElementById('snackbar') as HTMLElement;
+const bar = document.getElementById('progress-bar') as HTMLElement;
+function showSnackbar(): void {
+    snackbar.classList.remove("opacity-0", "translate-y-10");
+
+    snackbar.style.display = 'flex';
+    bar.style.transform = 'scaleX(1)';
+    startTime = performance.now();
+
+    function animate(now: number): void {
+        const progress = Math.min((now - startTime) / DURATION, 1);
+        bar.style.transform = `scaleX(${1 - progress})`;
+        if (progress < 1) {
+            rafId = requestAnimationFrame(animate);
+        } else {
+            snackbar.classList.add("opacity-0", "translate-y-10");
+            setTimeout(() => {
+                snackbar.style.display = 'none';
+            }, 1000);
+        }
+    }
+    rafId = requestAnimationFrame(animate);
+}
+
+document.getElementById('snackbar-close')?.addEventListener('click', () => {
+    cancelAnimationFrame(rafId);
+    snackbar.classList.add("opacity-0", "translate-y-10");
+    setTimeout(() => {
+        snackbar.style.display = 'none';
+    }, 1000);
+});
+
+
 const submitData = document.getElementById("submit-data") as HTMLElement;
-const submitErrors: Array<any> = JSON.parse(<string>submitData.dataset.errors);
-if (!Array.isArray(submitErrors)) {
-    validateSignupForm();
-    if(submitErrors["isEmailRegistered"]) {
-        changeFieldState(emailField, "error", "This email address is already associated with an account");
+const submitFeedback: Array<any> = JSON.parse(<string>submitData.dataset.feedback);
+console.log(submitFeedback);
+if (!Array.isArray(submitFeedback)) {
+    if("errors" in submitFeedback) {
+        validateSignupForm();
+        if(submitFeedback["errors"]["isEmailRegistered"]) {
+            changeFieldState(emailField, "error", "This email address is already associated with an account");
+        }
+    }
+    else if ("signup" in submitFeedback && submitFeedback["signup"] === "success") {
+        showSnackbar();
     }
 }
