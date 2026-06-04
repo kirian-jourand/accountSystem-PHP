@@ -350,7 +350,6 @@ document.getElementById('snackbar-close')?.addEventListener('click', () => {
 
 const submitData = document.getElementById("submit-data") as HTMLElement;
 const submitFeedback: Array<any> = JSON.parse(<string>submitData.dataset.feedback);
-console.log(submitFeedback);
 if (!Array.isArray(submitFeedback)) {
     if("errors" in submitFeedback) {
         validateSignupForm();

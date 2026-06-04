@@ -304,7 +304,6 @@ function showSnackbar() {
 });
 const submitData = document.getElementById("submit-data");
 const submitFeedback = JSON.parse(submitData.dataset.feedback);
-console.log(submitFeedback);
 if (!Array.isArray(submitFeedback)) {
     if ("errors" in submitFeedback) {
         validateSignupForm();
