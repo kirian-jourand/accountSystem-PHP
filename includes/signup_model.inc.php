@@ -11,7 +11,7 @@ function getEmail(object $pdo, string $email) {
     return $result ?: [];
 }
 
-function createUser(object $pdo, string $username, string $email, string $pwd): bool {
+function setUser(object $pdo, string $username, string $email, string $pwd): bool {
     $query = "INSERT INTO users (username, email, pwd) VALUES (:username, :email, :pwd);";
     $stmt = $pdo->prepare($query);
 

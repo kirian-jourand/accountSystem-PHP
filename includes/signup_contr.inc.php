@@ -97,5 +97,5 @@ function confirmPasswordTest(string $pwd, string $confirmPwd): bool {
 }
 
 function createUser(object $pdo, string $username, string $email, string $pwd): void {
-    createUser($pdo, $username, $email, $pwd);
+    setUser($pdo, $username, $email, $pwd);
 }
