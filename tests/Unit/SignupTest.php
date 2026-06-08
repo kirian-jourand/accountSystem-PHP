@@ -57,4 +57,62 @@ class SignupTest extends TestCase
         $this->assertCount(1, $result);
     }
 
+    public function testShortUsernameReturnsFalse(): void {
+        $this->assertFalse(isUsernameLengthInvalid("john"));
+    }
+
+    public function testExactly30CharsReturnsFalse(): void {
+        $this->assertFalse(isUsernameLengthInvalid(str_repeat("a", 30)));
+    }
+
+    public function test31CharsReturnsTrue(): void {
+        $this->assertTrue(isUsernameLengthInvalid(str_repeat("a", 31)));
+    }
+
+    public function testEmptyUsernameReturnsFalse(): void {
+        $this->assertFalse(isUsernameLengthInvalid(""));
+    }
+
+    public function testComplexPasswordReturnsAllTrue(): void {
+        $result = isPasswordComplex("Password1!");
+        $this->assertTrue($result["length"]);
+        $this->assertTrue($result["uppercase letter"]);
+        $this->assertTrue($result["number"]);
+        $this->assertTrue($result["special character"]);
+    }
+
+    public function testShortPasswordReturnsFalseLength(): void {
+        $result = isPasswordComplex("Pa1!");
+        $this->assertFalse($result["length"]);
+    }
+
+    public function testExactly8CharsReturnsTrueLength(): void {
+        $result = isPasswordComplex("Passw1!x");
+        $this->assertTrue($result["length"]);
+    }
+
+    public function testNoUppercaseReturnsFalse(): void {
+        $result = isPasswordComplex("password1!");
+        $this->assertFalse($result["uppercase letter"]);
+    }
+
+    public function testNoNumberReturnsFalse(): void {
+        $result = isPasswordComplex("Password!");
+        $this->assertFalse($result["number"]);
+    }
+
+    public function testNoSpecialCharReturnsFalse(): void {
+        $result = isPasswordComplex("Password1");
+        $this->assertFalse($result["special character"]);
+    }
+
+    public function testEmptyPasswordReturnsAllFalse(): void {
+        $result = isPasswordComplex("");
+        $this->assertFalse($result["length"]);
+        $this->assertFalse($result["uppercase letter"]);
+        $this->assertFalse($result["number"]);
+        $this->assertFalse($result["special character"]);
+    }
+
+
 }
