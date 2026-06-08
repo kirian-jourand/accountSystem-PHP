@@ -19,3 +19,26 @@ main {
 a:hover {
     color: #EA9467;
 }
+
+.snackbar {
+    transition: 1s;
+    position: fixed;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow:
+            inset 2px 2px 4px 0 rgba(255, 255, 255, 0.10),
+            inset -2px -2px 4px 0 rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+.progress-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: rgb(228, 27, 143);
+    width: 100%;
+    transform-origin: left;
+}

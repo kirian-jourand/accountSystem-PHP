@@ -3,3 +3,4 @@ node_modules/
 .sonarcloud.properties
 vendor/
 .env
+.phpunit.result.cache
