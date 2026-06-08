@@ -1,5 +1,6 @@
 # Account system - PHP
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-366488?style=for-the-badge&logo=php&logoColor=white)
 
 Petit projet sur le system de sign up et login en PHP. <br>
 tuto suivie : https://youtu.be/Ojk70Ag8Ofs?si=pGWRmAV59L3C64Z4
