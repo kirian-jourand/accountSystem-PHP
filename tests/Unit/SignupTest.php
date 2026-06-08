@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once '../../includes/signup_contr.inc.php'; // adapte le chemin
+require_once './includes/signup_contr.inc.php'; // adapte le chemin
 
 class SignupTest extends TestCase
 {
