@@ -77,7 +77,7 @@ function isUsernameLengthInvalid(string $username): bool {
  */
 function isPasswordComplex(string $pwd): array {
     return [
-        "length" => (bool) strlen($pwd) >= 8,
+        "length" => strlen($pwd) >= 8,
         "uppercase letter" => (bool) preg_match('/[A-Z]/', $pwd),
         "number" => (bool) preg_match('/\d/', $pwd),
         "special character" => (bool) preg_match('/[!@#$%^&*]/', $pwd)
