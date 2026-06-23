@@ -45,13 +45,15 @@ $submitFeedback = getSignupSubmitFeedback();
     <div class="grid grid-cols-1 gap-6">
         <h3 class=" text-2xl font-bold tracking-wide uppercase text-center">Login</h3>
         <form method="POST" action="" class="grid grid-cols-1 gap-6">
-            <label for="username"> <span class="hidden">Username</span>
-                <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
-            </label>
-            <div>
-                <div id="loginPwdInput" class="mb-1 border border-white/25 rounded-2xl pl-4 py-1 placeholder-gray-300 flex items-center justify-center">
-                    <label for="pwd"> <span class="hidden">Password</span>
-                        <input type="password" name="pwd" id="loginPassword" placeholder="Password" class="placeholder-gray-300 focus:outline-none focus:ring-0">
+            <div class="field-wrapper">
+                <label for="username"> <span class="hidden">Username</span>
+                    <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
+                </label>
+            </div>
+            <div class="field-wrapper">
+                <div id="loginPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
+                    <label for="pwd" class="grow"> <span class="hidden">Password</span>
+                        <input type="password" name="pwd" id="loginPassword" placeholder="Password" class="composed-field placeholder-gray-300 pl-4 focus:outline-none focus:ring-0">
                     </label>
                     <button type="button" id="loginTogglePwd" class="text-gray-300 w-12 flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="loginShowPwdIcon" class="size-6">
@@ -63,6 +65,7 @@ $submitFeedback = getSignupSubmitFeedback();
                         </svg>
                     </button>
                 </div>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
                 <a class="underline text-gray-300 text-xs">Forget password ?</a>
             </div>
             <button type="submit" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Login</button>
