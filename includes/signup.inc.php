@@ -45,15 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once "config_session.inc.php";
         if (empty($errors)) {
             createUser($pdo, $username, $email, $pwd);
+            $pdo = null;
+            $stmt=null;
             header("location: ../index.php?signup=success");
         }
         else {
             $_SESSION["errorsSignup"] = $errors;
             $_SESSION["submitData"] = ["username" => $username, "e-mail" => $email];
+            $pdo = null;
+            $stmt=null;
             header("location: ../index.php");
         }
-        $pdo = null;
-        $stmt=null;
         die();
 
     } catch (PDOException $e) {
