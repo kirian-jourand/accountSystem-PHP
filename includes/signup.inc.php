@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $isUsernameLengthInvalid = isUsernameLengthInvalid($username);
         if ($isUsernameLengthInvalid) {
-            $errors["usernameLengthInvalid"] = $isUsernameLengthInvalid;
+            $errors["usernameLengthInvalid"] = true;
         }
 
         $isEmailRegistered = isEmailRegistered($pdo, $email);
