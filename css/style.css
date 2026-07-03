@@ -16,6 +16,14 @@ main {
     background-color: #EA9467;
 }
 
+.bt-secondary {
+    background-color: rgb(47, 27, 88);
+}
+
+.bt-secondary:hover {
+    background-color: rgb(49, 44, 133);
+}
+
 a:hover {
     color: #EA9467;
 }
