@@ -44,7 +44,7 @@ $submitFeedback = getSignupSubmitFeedback();
 ">
     <div class="grid grid-cols-1 gap-6">
         <h3 class=" text-2xl font-bold tracking-wide uppercase text-center">Login</h3>
-        <form method="POST" action="" class="grid grid-cols-1 gap-6">
+        <form method="POST" action="includes/login.inc.php" class="grid grid-cols-1 gap-6">
             <div class="field-wrapper">
                 <label for="e-mail"> <span class="hidden">E-mail</span>
                     <input type="email" name="e-mail" placeholder="E-mail" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">

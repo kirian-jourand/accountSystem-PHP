@@ -13,16 +13,38 @@ session_set_cookie_params([
 ]);
 session_start();
 
-if (!isset($_SESSION['last_regeneration'])) {
-    regenerateSessionId();
+if (isset($_SESSION["user_id"])) {
+    if (!isset($_SESSION['last_regeneration'])) {
+        regenerateSessionIdLoggedin();
+    } else {
+        $interval = 1800; // 30 minutes
+        if (time() - $_SESSION['last_regeneration'] >= $interval) {
+            regenerateSessionIdLoggedin();
+        }
+    }
 } else {
-    $interval = 1800; // 30 minutes
-    if (time() - $_SESSION['last_regeneration'] >= $interval) {
+    if (!isset($_SESSION['last_regeneration'])) {
         regenerateSessionId();
+    } else {
+        $interval = 1800; // 30 minutes
+        if (time() - $_SESSION['last_regeneration'] >= $interval) {
+            regenerateSessionId();
+        }
     }
 }
 
+function regenerateSessionIdLoggedin(): void {
+    session_regenerate_id(true);
+
+    $userId = $_SESSION['user_id'];
+    $newSessionId = session_create_id();
+    $sessionId = $newSessionId."_".$userId;
+    session_id($sessionId);
+
+    $_SESSION['last_regeneration'] = time();
+}
+
 function regenerateSessionId(): void {
-    session_regenerate_id();
+    session_regenerate_id(true);
     $_SESSION['last_regeneration'] = time();
 }
