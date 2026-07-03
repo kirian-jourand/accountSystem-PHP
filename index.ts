@@ -8,6 +8,67 @@ window.addEventListener("load", () => {
 
 
 
+
+
+
+
+
+
+
+// SNACKBAR
+const DURATION = 6000; // 6 secondes
+let rafId: number;
+let startTime: number;
+const snackbar = document.getElementById('snackbar') as HTMLElement;
+const snackbarTitle = document.getElementById('snackbar-title') as HTMLElement;
+const snackbarDescription = document.getElementById('snackbar-sub') as HTMLElement;
+const bar = document.getElementById('progress-bar') as HTMLElement;
+function showSnackbar(title: string, description: string): void {
+    snackbarTitle.textContent = title;
+    snackbarDescription.textContent = description;
+
+    snackbar.classList.remove("opacity-0", "translate-y-10");
+
+    snackbar.style.display = 'flex';
+    bar.style.transform = 'scaleX(1)';
+    startTime = performance.now();
+
+    function animate(now: number): void {
+        const progress = Math.min((now - startTime) / DURATION, 1);
+        bar.style.transform = `scaleX(${1 - progress})`;
+        if (progress < 1) {
+            rafId = requestAnimationFrame(animate);
+        } else {
+            snackbar.classList.add("opacity-0", "translate-y-10");
+            setTimeout(() => {
+                snackbar.style.display = 'none';
+            }, 1000);
+        }
+    }
+    rafId = requestAnimationFrame(animate);
+}
+
+document.getElementById('snackbar-close')?.addEventListener('click', () => {
+    cancelAnimationFrame(rafId);
+    snackbar.classList.add("opacity-0", "translate-y-10");
+    setTimeout(() => {
+        snackbar.style.display = 'none';
+    }, 1000);
+});
+
+
+
+
+
+
+
+
+
+
+
+// LOGIQUE POUR LES CHAMPS
+const signupForm = document.getElementById("signup-form") as HTMLFormElement;
+const loginForm = document.getElementById("login-form") as HTMLFormElement;
 // logic for the login password input
 const loginPwdInput = document.getElementById("loginPwdInput") as HTMLDivElement;
 const loginPassword = document.getElementById("loginPassword") as HTMLInputElement;
@@ -147,6 +208,30 @@ function changeFieldState(field: HTMLInputElement, state: "error" | "default", e
     }
 }
 
+// Resets the field to its default state when the user modifies it
+signupForm.querySelectorAll("input").forEach(field => {
+    field.addEventListener("input", () => {
+        changeFieldState(field, "default");
+    });
+});
+
+loginForm.querySelectorAll("input").forEach(field => {
+    field.addEventListener("input", () => {
+        changeFieldState(field, "default");
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+// FONCTION UTILITAIRE
 /**
  * Change password complexity rule state
  * @param {HTMLElement} li
@@ -229,7 +314,15 @@ function isPasswordComplex(field: HTMLInputElement): Record<string, boolean> {
 }
 
 
-const signupForm = document.getElementById("signup-form") as HTMLFormElement;
+
+
+
+
+
+
+
+
+// SIGNUP
 const signupFormFields = signupForm.querySelectorAll<HTMLInputElement>("input");
 const signupSubmitBtn = document.getElementById("signup-submit-btn") as HTMLButtonElement;
 
@@ -239,7 +332,7 @@ const passwordLengthCheck = signupForm.querySelector(".lengthCheck") as HTMLElem
 const passwordUppercaseCheck = signupForm.querySelector(".uppercaseCheck") as HTMLElement;
 const passwordNumberCheck = signupForm.querySelector(".numberCheck") as HTMLElement;
 const passwordSpecialCharCheck = signupForm.querySelector(".specialCharCheck") as HTMLElement;
-const emailField = signupForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
+const signupEmailField = signupForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
 let passwordComplexityCheck = false;
 passwordField.addEventListener("input", () => {
     const passwordComplexity = isPasswordComplex(passwordField);
@@ -251,9 +344,9 @@ passwordField.addEventListener("input", () => {
 
     passwordComplexityCheck =
         (passwordComplexity["length"] &&
-        passwordComplexity["uppercase letter"] &&
-        passwordComplexity["number"] &&
-        passwordComplexity["special character"]) ?? false;
+            passwordComplexity["uppercase letter"] &&
+            passwordComplexity["number"] &&
+            passwordComplexity["special character"]) ?? false;
 });
 
 /**
@@ -266,9 +359,9 @@ function validateSignupForm () {
     })
 
     // Check if the email format is valid
-    let emailFormatCheck = isEmailFormatValid(emailField);
+    let emailFormatCheck = isEmailFormatValid(signupEmailField);
     if (!emailFormatCheck) {
-        changeFieldState(emailField, "error", "The email format is invalid (Ex. example@mail.com)");
+        changeFieldState(signupEmailField, "error", "The email format is invalid (Ex. example@mail.com)");
     }
 
     // Check if passwordField equals confirmPasswordField
@@ -304,60 +397,80 @@ signupSubmitBtn.addEventListener("click", () => {
     }
 });
 
-// Resets the field to its default state when the user modifies it
-signupForm.querySelectorAll("input").forEach(field => {
-    field.addEventListener("input", () => {
-        changeFieldState(field, "default");
-    });
-});
-
-
-const DURATION = 6000; // 6 secondes
-let rafId: number;
-let startTime: number;
-const snackbar = document.getElementById('snackbar') as HTMLElement;
-const bar = document.getElementById('progress-bar') as HTMLElement;
-function showSnackbar(): void {
-    snackbar.classList.remove("opacity-0", "translate-y-10");
-
-    snackbar.style.display = 'flex';
-    bar.style.transform = 'scaleX(1)';
-    startTime = performance.now();
-
-    function animate(now: number): void {
-        const progress = Math.min((now - startTime) / DURATION, 1);
-        bar.style.transform = `scaleX(${1 - progress})`;
-        if (progress < 1) {
-            rafId = requestAnimationFrame(animate);
-        } else {
-            snackbar.classList.add("opacity-0", "translate-y-10");
-            setTimeout(() => {
-                snackbar.style.display = 'none';
-            }, 1000);
-        }
-    }
-    rafId = requestAnimationFrame(animate);
-}
-
-document.getElementById('snackbar-close')?.addEventListener('click', () => {
-    cancelAnimationFrame(rafId);
-    snackbar.classList.add("opacity-0", "translate-y-10");
-    setTimeout(() => {
-        snackbar.style.display = 'none';
-    }, 1000);
-});
-
-
 const submitData = document.getElementById("submit-data") as HTMLElement;
 const submitFeedback: Array<any> = JSON.parse(<string>submitData.dataset.feedback);
 if (!Array.isArray(submitFeedback)) {
     if("errors" in submitFeedback) {
         validateSignupForm();
         if(submitFeedback["errors"]["isEmailRegistered"]) {
-            changeFieldState(emailField, "error", "This email address is already associated with an account");
+            changeFieldState(signupEmailField, "error", "This email address is already associated with an account");
         }
     }
     else if ("signup" in submitFeedback && submitFeedback["signup"] === "success") {
-        showSnackbar();
+        showSnackbar("Account created successfully", "Welcome! You can now log in.");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// LOGIN
+const loginFormFields = loginForm.querySelectorAll<HTMLInputElement>("input");
+const loginSubmitBtn = document.getElementById("login-submit-btn") as HTMLButtonElement;
+const loginEmailField = loginForm.querySelector("input[type=\"email\"]") as HTMLInputElement;
+function validateLoginForm () {
+    // Remise à 0 des fields
+    loginFormFields.forEach(field => {
+        changeFieldState(field, "default");
+    })
+
+    // Check if the email format is valid
+    let emailFormatCheck = isEmailFormatValid(loginEmailField);
+    if (!emailFormatCheck) {
+        changeFieldState(loginEmailField, "error", "The email format is invalid (Ex. example@mail.com)");
+    }
+
+    // Check if fields are empty
+    let emptyFieldsCheck = true;
+    let emptyFields = getEmptyFields(loginForm);
+    if (emptyFields.length > 0) {
+        emptyFieldsCheck = false;
+        emptyFields.forEach(field => {
+            changeFieldState(field, "error", "This field is required");
+        });
+    }
+
+    return emptyFieldsCheck && emailFormatCheck;
+}
+
+loginSubmitBtn.addEventListener("click", () => {
+    if (validateLoginForm()) {
+        loginForm.submit();
+    }
+});
+
+const loginData = document.getElementById("login-data") as HTMLElement;
+const loginFeedback: Array<any> = JSON.parse(<string>loginData.dataset.feedback);
+console.log(loginFeedback);
+const loginErrorMsg = document.getElementById("login-error-msg") as HTMLElement;
+if (!Array.isArray(loginFeedback)) {
+    if("errors" in loginFeedback) {
+        if(loginFeedback["errors"]["isBruteForce"]) {
+            loginErrorMsg.textContent = "The number of login attempts has been exceeded. Please wait 2 minutes before trying again.";
+            loginErrorMsg.classList.remove("hidden");
+        } else if (!loginFeedback["errors"]["isCredentialsValid"]) {
+            loginErrorMsg.textContent = "There is an error in the email address or password";
+            loginErrorMsg.classList.remove("hidden");
+        }
+    }
+    else if ("login" in loginFeedback && loginFeedback["login"] === "success") {
+        showSnackbar("Welcome back, "+loginFeedback["username"], "You are logged in !");
     }
 }
