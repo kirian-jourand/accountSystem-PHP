@@ -11,40 +11,27 @@ class LoginTest extends TestCase {
     // ==================== getEmptyFields ====================
 
     public function testGetEmptyFieldsNoEmptyReturnsEmptyArray(): void {
-        $result = getEmptyFields("john@mail.com", "Password1!");
+        $result = getLoginEmptyFields("john@mail.com", "Password1!");
         $this->assertEmpty($result);
     }
 
     public function testGetEmptyFieldsBothEmptyReturnsBothFields(): void {
-        $result = getEmptyFields("", "");
+        $result = getLoginEmptyFields("", "");
         $this->assertCount(2, $result);
         $this->assertContains("e-mail", $result);
         $this->assertContains("pwd", $result);
     }
 
     public function testGetEmptyFieldsEmptyEmailReturnsEmail(): void {
-        $result = getEmptyFields("", "Password1!");
+        $result = getLoginEmptyFields("", "Password1!");
         $this->assertContains("e-mail", $result);
         $this->assertCount(1, $result);
     }
 
     public function testGetEmptyFieldsEmptyPasswordReturnsPassword(): void {
-        $result = getEmptyFields("john@mail.com", "");
+        $result = getLoginEmptyFields("john@mail.com", "");
         $this->assertContains("pwd", $result);
         $this->assertCount(1, $result);
-    }
-
-    // ==================== isEmailInvalid ====================
-
-    public function testValidEmailReturnsFalse(): void {
-        $this->assertFalse(isEmailInvalid("john@mail.com"));
-    }
-
-    public function testInvalidEmailReturnsTrue(): void {
-        $this->assertTrue(isEmailInvalid("not-an-email"));
-        $this->assertTrue(isEmailInvalid("missing@dotcom"));
-        $this->assertTrue(isEmailInvalid("@nodomain.com"));
-        $this->assertTrue(isEmailInvalid(""));
     }
 
     // ==================== isBruteForce ====================

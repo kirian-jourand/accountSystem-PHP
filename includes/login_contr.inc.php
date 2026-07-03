@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+
 /**
  * Return an array filled with the name of the field that is empty.
  *
@@ -9,7 +10,7 @@ declare(strict_types=1);
  *
  * @return array
  */
-function getEmptyFields(string $email, string $pwd): array {
+function getLoginEmptyFields(string $email, string $pwd): array {
     $emptyFields = [];
 
     if (empty($email)) {
@@ -20,10 +21,6 @@ function getEmptyFields(string $email, string $pwd): array {
     }
 
     return $emptyFields;
-}
-
-function isEmailInvalid(string $email): bool {
-    return !filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function isBruteForce(): bool {

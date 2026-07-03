@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /** @var PDO $pdo */
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
+        require_once "utils.inc.php";
 
         // Error handler
         $errors = [];
 
-        $emptyFields = getEmptyFields($username, $email, $pwd, $confirmPwd);
+        $emptyFields = getSignupEmptyFields($username, $email, $pwd, $confirmPwd);
         if (!empty($emptyFields)) {
             $errors["emptyFields"] = $emptyFields;
         }

@@ -12,10 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         /** @var PDO $pdo */
         require_once "login_model.inc.php";
         require_once "login_contr.inc.php";
+        require_once "utils.inc.php";
 
         $errors = [];
 
-        $emptyFields = getEmptyFields($email, $pwd);
+        $emptyFields = getLoginEmptyFields($email, $pwd);
         if (!empty($emptyFields)) {
             $errors["emptyFields"] = $emptyFields;
         }
