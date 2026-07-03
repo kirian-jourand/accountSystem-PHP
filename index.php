@@ -144,6 +144,11 @@ $loginFeedback = getLoginFeedback();
             <button type="button" id="signup-submit-btn" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Signup</button>
         </form>
     </div>
+    <div>
+        <form method="POST" action="includes/logout.inc.php" id="logout-form" class="grid grid-cols-1 gap-6">
+            <button type="submit" id="logout-submit-btn" class="bt-secondary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-indigo-950/50 hover:shadow-indigo-900 transition-all duration-450 ease-in-out">Logout</button>
+        </form>
+    </div>
 </main>
 <div class="snackbar bg-black/50 opacity-0 translate-y-10" id="snackbar">
     <div class="snackbar-icon">
