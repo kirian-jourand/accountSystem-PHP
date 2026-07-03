@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /** @var PDO $pdo */
         require_once "signup_model.inc.php";
         require_once "signup_contr.inc.php";
+        require_once "utils.inc.php";
 
         // Error handler
         $errors = [];
 
-        $emptyFields = getEmptyFields($username, $email, $pwd, $confirmPwd);
+        $emptyFields = getSignupEmptyFields($username, $email, $pwd, $confirmPwd);
         if (!empty($emptyFields)) {
             $errors["emptyFields"] = $emptyFields;
         }
@@ -25,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $isUsernameLengthInvalid = isUsernameLengthInvalid($username);
         if ($isUsernameLengthInvalid) {
-            $errors["usernameLengthInvalid"] = $isUsernameLengthInvalid;
+            $errors["usernameLengthInvalid"] = true;
         }
 
         $isEmailRegistered = isEmailRegistered($pdo, $email);
@@ -45,15 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once "config_session.inc.php";
         if (empty($errors)) {
             createUser($pdo, $username, $email, $pwd);
+            $pdo = null;
+            $stmt=null;
             header("location: ../index.php?signup=success");
         }
         else {
             $_SESSION["errorsSignup"] = $errors;
             $_SESSION["submitData"] = ["username" => $username, "e-mail" => $email];
+            $pdo = null;
+            $stmt=null;
             header("location: ../index.php");
         }
-        $pdo = null;
-        $stmt=null;
         die();
 
     } catch (PDOException $e) {

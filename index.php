@@ -1,8 +1,10 @@
 <?php
 require_once "includes/config_session.inc.php";
 require_once "includes/signup_view.inc.php";
+require_once "includes/login_view.inc.php";
 
 $submitFeedback = getSignupSubmitFeedback();
+$loginFeedback = getLoginFeedback();
 ?>
 
 <!doctype html>
@@ -44,14 +46,17 @@ $submitFeedback = getSignupSubmitFeedback();
 ">
     <div class="grid grid-cols-1 gap-6">
         <h3 class=" text-2xl font-bold tracking-wide uppercase text-center">Login</h3>
-        <form method="POST" action="" class="grid grid-cols-1 gap-6">
-            <label for="username"> <span class="hidden">Username</span>
-                <input type="text" name="username" placeholder="Username" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
-            </label>
-            <div>
-                <div id="loginPwdInput" class="mb-1 border border-white/25 rounded-2xl pl-4 py-1 placeholder-gray-300 flex items-center justify-center">
-                    <label for="pwd"> <span class="hidden">Password</span>
-                        <input type="password" name="pwd" id="loginPassword" placeholder="Password" class="placeholder-gray-300 focus:outline-none focus:ring-0">
+        <form method="POST" action="includes/login.inc.php" id="login-form" class="grid grid-cols-1 gap-6">
+            <div class="field-wrapper">
+                <label for="e-mail"> <span class="hidden">E-mail</span>
+                    <input type="email" name="e-mail" placeholder="E-mail" class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
+                </label>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+            </div>
+            <div class="field-wrapper">
+                <div id="loginPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
+                    <label for="pwd" class="grow"> <span class="hidden">Password</span>
+                        <input type="password" name="pwd" id="loginPassword" placeholder="Password" class="composed-field placeholder-gray-300 pl-4 focus:outline-none focus:ring-0">
                     </label>
                     <button type="button" id="loginTogglePwd" class="text-gray-300 w-12 flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="loginShowPwdIcon" class="size-6">
@@ -63,9 +68,11 @@ $submitFeedback = getSignupSubmitFeedback();
                         </svg>
                     </button>
                 </div>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
                 <a class="underline text-gray-300 text-xs">Forget password ?</a>
             </div>
-            <button type="submit" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Login</button>
+            <button type="button" id="login-submit-btn" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Login</button>
+            <span id="login-error-msg" class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
         </form>
     </div>
 
@@ -81,7 +88,7 @@ $submitFeedback = getSignupSubmitFeedback();
                             value="<?= htmlspecialchars($submitFeedback['submitData']['username'] ?? '') ?>"
                             class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
             </div>
             <div class="field-wrapper">
                 <label for="e-mail"> <span class="hidden">E-mail</span>
@@ -92,7 +99,7 @@ $submitFeedback = getSignupSubmitFeedback();
                             value="<?= htmlspecialchars($submitFeedback['submitData']['e-mail'] ?? '') ?>"
                             class="border border-white/25 rounded-2xl px-4 py-1 placeholder-gray-300 focus:outline-none focus:border-white w-full">
                 </label>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
             </div>
             <div class="field-wrapper">
                 <div id="signupPwdInput" class="mb-1 border border-white/25 rounded-2xl py-1 placeholder-gray-300 flex items-center justify-center">
@@ -109,7 +116,7 @@ $submitFeedback = getSignupSubmitFeedback();
                         </svg>
                     </button>
                 </div>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
                 <ul id="signupPwdComplexRule" class="hidden">
                     <li class="lengthCheck text-red-400 text-sm"><span class="emojiValid">❌</span> is more than 8 characters long</li>
                     <li class="uppercaseCheck text-red-400 text-sm"><span class="emojiValid">❌</span> Contains an uppercase letter (A,B,C,...)</li>
@@ -132,7 +139,7 @@ $submitFeedback = getSignupSubmitFeedback();
                         </svg>
                     </button>
                 </div>
-                <span class="error-msg hidden  text-red-400 text-sm font-bold">erreur</span>
+                <span class="error-msg hidden  text-red-400 text-sm font-bold block">erreur</span>
             </div>
             <button type="button" id="signup-submit-btn" class="bt-primary px-8 py-2 rounded-2xl uppercase text-md font-bold shadow-lg shadow-pink-600/50 hover:shadow-orange-300 transition-all duration-450 ease-in-out">Signup</button>
         </form>
@@ -145,8 +152,8 @@ $submitFeedback = getSignupSubmitFeedback();
         </svg>
     </div>
     <div class="snackbar-text">
-        <p class="snackbar-title">Account created successfully</p>
-        <p class="snackbar-sub">Welcome! You can now log in.</p>
+        <p id="snackbar-title"></p>
+        <p id="snackbar-sub"></p>
     </div>
     <button id="snackbar-close">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -157,5 +164,6 @@ $submitFeedback = getSignupSubmitFeedback();
 </div>
 </body>
 <div id="submit-data" data-feedback="<?= htmlspecialchars(json_encode($submitFeedback)) ?>"></div>
+<div id="login-data" data-feedback="<?= htmlspecialchars(json_encode($loginFeedback)) ?>"></div>
 </html>
 <script src="./js/index.js"></script>

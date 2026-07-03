@@ -2,17 +2,6 @@
 declare(strict_types=1);
 
 /**
- * Returns a boolean if the given field matches the email format
- *
- * @param string $email
- *
- * @return bool
- */
-function isEmailInvalid(string $email): bool {
-    return !filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-/**
  * Return a boolean if the email already used for an account or not
  *
  * @param object $pdo
@@ -34,7 +23,7 @@ function isEmailRegistered(object $pdo, string $email): bool {
  *
  * @return array
  */
-function getEmptyFields(string $username, string $email, string $pwd, string $confimPwd): array {
+function getSignupEmptyFields(string $username, string $email, string $pwd, string $confimPwd): array {
     $emptyFields = [];
 
     if (empty($username)) {
